@@ -27,7 +27,7 @@ BOOL	UART::SetPortDCB(int arg)
 	DCB	dcb;
 	int rate = arg;
 	memset(&dcb, 0, sizeof(dcb));
-	if (GetCommState(hComm, &dcb)) {
+	if (!GetCommState(hComm, &dcb)) {
 		return FALSE;
 	}
 
@@ -81,11 +81,17 @@ BOOL	UART::SetTimeOut(DWORD ReadInternal, DWORD ReadTotalMultiplier,
 
 }
 
-BOOL	UART::InitComm(void)
+BOOL	UART::InitComm(LPCWSTR port,int rate)
 {
-	PurgeComm(hComm, PURGE_RXCLEAR | PURGE_TXCLEAR
-		| PURGE_RXABORT | PURGE_TXABORT);
-	return TRUE;
+	if (OpenPort(port)) {
+		if (SetPortDCB(rate)) {
+			SetTimeOut(0, 0, 0, 0,0);
+			SetCommMask(hComm, EV_RXCHAR);
+			PurgeComm(hComm, PURGE_RXABORT | PURGE_RXCLEAR | PURGE_TXABORT | PURGE_TXCLEAR);
+			return TRUE;
+		}
+	}
+	return FALSE;
 
 }
 

@@ -17,7 +17,7 @@ public:
 	BOOL	SetTimeOut(DWORD ReadInternal, DWORD ReadTotalMultiplier,
 		DWORD ReadTotalconstant, DWORD WriteTotalMultipilier,
 		DWORD WriteTotalconstant);
-	BOOL	InitComm(void);
+	BOOL	InitComm(LPCWSTR port, int rate);
 	BOOL ReceiveChar(char*RXBuff);
 	BOOL WriteChar(BYTE*	m_szWriteBuffer, DWORD m_nToSend);
 	BOOL GetPortName(LPCWSTR name, DWORD name_len);

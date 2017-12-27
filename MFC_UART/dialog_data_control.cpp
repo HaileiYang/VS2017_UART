@@ -9,7 +9,7 @@
 #include "dialog_data_control.h"
 #include "resource.h"
 #include "afxdialogex.h"
-
+#include "MFC_UARTDlg.h"
 
 
 BOOL	DIALOG_DATA::InitPort(CComboBox	*comBox)
